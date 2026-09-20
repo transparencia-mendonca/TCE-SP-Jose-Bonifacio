@@ -1,25 +1,80 @@
-TCESP José Bonifácio — v0.9.17-JB
+TCESP José Bonifácio — v0.9.18-JB
+BASE HISTÓRICA PERMANENTE
 
-Atualização de paridade funcional com a estrutura do painel TCESP Mendonça v0.9.17.
+Objetivo desta atualização
+--------------------------
+Perenizar no próprio repositório a base que estava apenas no IndexedDB do navegador.
+A atualização da interface deixa de depender de recarregar os exercícios pela API do TCESP.
 
-O que muda:
-- nova aba “Sinais de auditoria”, apresentada como triagem para conferência documental, nunca como prova de irregularidade;
-- detector anual de múltiplos empenhos de pequeno valor por credor, sem expor publicamente a regra detalhada de seleção;
-- detector de pagamentos coincidentes: mesmo credor, mesmo valor e mesma data em empenhos distintos;
-- área de qualidade dos dados: competência/data divergentes, pagamentos em fins de semana, ausência de identificação, grafias distintas, duplicatas exatas e estornos;
-- testes de integridade entre empenho líquido, liquidação e pagamento, registrando também quando não são encontradas quebras;
-- ficha histórica do credor ao clicar no nome, consolidada prioritariamente pelo identificador, com nomes alternativos, totais por exercício, empenhos e pagamentos;
-- aba “Pagamentos eventuais” com triagem conservadora e sem apresentar pagamentos pessoais como diárias de forma automática;
-- comparação de exercícios 2020–2026 e atualização pela API do TCESP usando o município `jose-bonifacio`;
-- classificação setorial genérica, sem regras locais específicas de Mendonça;
-- migração conservadora: a atualização da interface não força a substituição da base já armazenada no IndexedDB de José Bonifácio.
+Como funciona
+-------------
+1. O banco local continua sendo IndexedDB com o mesmo nome usado na v0.9.17-JB:
+   tcesp-jose-bonifacio-v6
+2. Se o navegador já possui dados. a nova versão PRESERVA integralmente esse banco e NÃO baixa
+   novamente os arquivos históricos.
+3. Em um navegador novo. sem IndexedDB. o painel lê baseline-manifest.json e restaura
+   automaticamente a fotografia histórica armazenada nos arquivos data-AAAA.json.
+4. O botão "Restaurar base" passa a restaurar essa fotografia permanente do repositório.
+5. Atualizações mensais pela API continuam sendo gravadas somente no IndexedDB local.
+6. Futuras versões de interface não devem trocar DBN nem apagar o IndexedDB.
 
-Limitações:
-A API do TCESP não traz, com detalhe suficiente para os testes, objeto da contratação, modalidade, contrato, nota fiscal, medição, ata de registro de preços ou justificativa do pagamento. Os sinais devem ser cotejados com os documentos administrativos correspondentes.
+Fotografia arquivada
+--------------------
+Fonte: backup tcesp-jose-bonifacio-backup-2026-09-20.json anexado pelo usuário.
+Exercícios efetivamente presentes no arquivo: 2014 a 2026.
+Registros de despesa: 593.261
+Registros de receita: 17.805
+Arquivos anuais: 13
 
-Publicação:
-- substituir apenas index.html, app.js, style.css, sw.js e LEIA-ME.txt;
-- preservar seed-data.js, manifest.webmanifest e icon.svg já existentes no repositório de José Bonifácio;
-- não substituir nem apagar dados locais já carregados pelo navegador;
-- o Service Worker/PWA offline permanece temporariamente desativado para reduzir cache de versões antigas durante a fase de atualização frequente;
-- build estático: 0917JB-20260920.
+ATENÇÃO SOBRE A COBERTURA DO BACKUP
+-----------------------------------
+Esta versão não inventa nem busca dados ausentes: ela pereniza exatamente o conteúdo do backup.
+Dentro do período 2019–2026. o backup não contém maio/2024 em despesas nem em receitas.
+Em 2014. receitas de novembro também não constam do arquivo.
+2026 contém janeiro a julho. como no backup recebido.
+
+ARQUIVOS A ENVIAR NESTA ATUALIZAÇÃO
+-----------------------------------
+Substituir:
+- index.html
+- app.js
+- style.css
+- sw.js
+- LEIA-ME.txt
+- seed-data.js
+
+Adicionar ao repositório:
+- baseline-manifest.json
+- data-2014.json
+- data-2015.json
+- data-2016.json
+- data-2017.json
+- data-2018.json
+- data-2019.json
+- data-2020.json
+- data-2021.json
+- data-2022.json
+- data-2023.json
+- data-2024.json
+- data-2025.json
+- data-2026.json
+
+Preservar os arquivos já existentes:
+- manifest.webmanifest
+- icon.svg
+
+DEPOIS DESTA ATUALIZAÇÃO
+------------------------
+Os arquivos baseline-manifest.json e data-AAAA.json passam a ser a fotografia permanente.
+Em futuras atualizações normais da interface. NÃO os substitua nem apague.
+Só deverão ser alterados quando houver decisão explícita de atualizar a fotografia-base.
+
+Atenção técnica
+---------------
+- Não alterar DBN = "tcesp-jose-bonifacio-v6" em novas versões sem migração programada.
+- Não elevar a versão do IndexedDB por simples mudança visual.
+- Não usar limpeza automática do object store.
+- O Service Worker permanece desativado durante esta fase para evitar cache de versão anterior.
+
+Build estático: 0918JB-20260920
+Baseline: jb-baseline-2026-09-20

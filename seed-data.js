@@ -1,1 +1,2 @@
-window.SEED_DATA={"despesas":[],"receitas":[],"exercicios":[2020,2021,2022,2023,2024,2025,2026]};
+window.SEED_DATA={_bundleVersion:"jb-baseline-2026-09-20",exercicios:[],despesas:[],receitas:[],apiUpdates:{},autoCheck:{}};
+window.TCESP_PERMANENT_BASELINE={manifest:"baseline-manifest.json",version:"jb-baseline-2026-09-20"};
