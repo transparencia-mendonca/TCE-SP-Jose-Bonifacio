@@ -1,0 +1,38 @@
+TCESP José Bonifácio — PWA v0.6-JB
+
+Clone funcional da versão v0.6 do painel de Mendonça, adaptado exclusivamente para José Bonifácio/SP.
+
+FONTE
+API oficial do Portal da Transparência Municipal do TCESP.
+Município na API: jose-bonifacio.
+
+EXERCÍCIOS
+2020 a 2026 já aparecem no seletor.
+A base inicial é vazia para impedir qualquer mistura com dados de Mendonça.
+Use “Carregar exercício TCESP” para baixar os dados do ano selecionado.
+Os dados baixados ficam no IndexedDB do aparelho e podem ser exportados em Backup JSON.
+
+IMPORTANTE
+Se o navegador bloquear a API por CORS/rede, a carga automática pode falhar; nesse caso, use Importar JSON.
+Ano em andamento deve ser comparado com período equivalente de anos anteriores.
+
+PUBLICAÇÃO NO GITHUB PAGES
+Envie os 8 arquivos deste pacote para a raiz de um repositório próprio de José Bonifácio.
+Ative Settings > Pages > Deploy from a branch > main > /(root).
+
+ARQUIVOS
+index.html
+app.js
+style.css
+seed-data.js
+manifest.webmanifest
+sw.js
+icon.svg
+LEIA-ME.txt
+
+
+VERSÃO 0.7
+- Comparativo de exercícios agora inclui gráficos anuais e crescimento nominal.
+- Registra automaticamente data/hora de cada atualização mensal feita pela API.
+- Exibe último mês disponível, última atualização e última verificação automática.
+- Em 2026, após o prazo AUDESP conhecido do próximo mês, tenta consultar automaticamente a API no máximo uma vez por dia.

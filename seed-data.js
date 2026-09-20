@@ -1,0 +1,1 @@
+window.SEED_DATA={"despesas":[],"receitas":[],"exercicios":[2020,2021,2022,2023,2024,2025,2026]};
