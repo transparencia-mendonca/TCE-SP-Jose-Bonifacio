@@ -1,38 +1,25 @@
-TCESP José Bonifácio — PWA v0.6-JB
+TCESP José Bonifácio — v0.9.17-JB
 
-Clone funcional da versão v0.6 do painel de Mendonça, adaptado exclusivamente para José Bonifácio/SP.
+Atualização de paridade funcional com a estrutura do painel TCESP Mendonça v0.9.17.
 
-FONTE
-API oficial do Portal da Transparência Municipal do TCESP.
-Município na API: jose-bonifacio.
+O que muda:
+- nova aba “Sinais de auditoria”, apresentada como triagem para conferência documental, nunca como prova de irregularidade;
+- detector anual de múltiplos empenhos de pequeno valor por credor, sem expor publicamente a regra detalhada de seleção;
+- detector de pagamentos coincidentes: mesmo credor, mesmo valor e mesma data em empenhos distintos;
+- área de qualidade dos dados: competência/data divergentes, pagamentos em fins de semana, ausência de identificação, grafias distintas, duplicatas exatas e estornos;
+- testes de integridade entre empenho líquido, liquidação e pagamento, registrando também quando não são encontradas quebras;
+- ficha histórica do credor ao clicar no nome, consolidada prioritariamente pelo identificador, com nomes alternativos, totais por exercício, empenhos e pagamentos;
+- aba “Pagamentos eventuais” com triagem conservadora e sem apresentar pagamentos pessoais como diárias de forma automática;
+- comparação de exercícios 2020–2026 e atualização pela API do TCESP usando o município `jose-bonifacio`;
+- classificação setorial genérica, sem regras locais específicas de Mendonça;
+- migração conservadora: a atualização da interface não força a substituição da base já armazenada no IndexedDB de José Bonifácio.
 
-EXERCÍCIOS
-2020 a 2026 já aparecem no seletor.
-A base inicial é vazia para impedir qualquer mistura com dados de Mendonça.
-Use “Carregar exercício TCESP” para baixar os dados do ano selecionado.
-Os dados baixados ficam no IndexedDB do aparelho e podem ser exportados em Backup JSON.
+Limitações:
+A API do TCESP não traz, com detalhe suficiente para os testes, objeto da contratação, modalidade, contrato, nota fiscal, medição, ata de registro de preços ou justificativa do pagamento. Os sinais devem ser cotejados com os documentos administrativos correspondentes.
 
-IMPORTANTE
-Se o navegador bloquear a API por CORS/rede, a carga automática pode falhar; nesse caso, use Importar JSON.
-Ano em andamento deve ser comparado com período equivalente de anos anteriores.
-
-PUBLICAÇÃO NO GITHUB PAGES
-Envie os 8 arquivos deste pacote para a raiz de um repositório próprio de José Bonifácio.
-Ative Settings > Pages > Deploy from a branch > main > /(root).
-
-ARQUIVOS
-index.html
-app.js
-style.css
-seed-data.js
-manifest.webmanifest
-sw.js
-icon.svg
-LEIA-ME.txt
-
-
-VERSÃO 0.7
-- Comparativo de exercícios agora inclui gráficos anuais e crescimento nominal.
-- Registra automaticamente data/hora de cada atualização mensal feita pela API.
-- Exibe último mês disponível, última atualização e última verificação automática.
-- Em 2026, após o prazo AUDESP conhecido do próximo mês, tenta consultar automaticamente a API no máximo uma vez por dia.
+Publicação:
+- substituir apenas index.html, app.js, style.css, sw.js e LEIA-ME.txt;
+- preservar seed-data.js, manifest.webmanifest e icon.svg já existentes no repositório de José Bonifácio;
+- não substituir nem apagar dados locais já carregados pelo navegador;
+- o Service Worker/PWA offline permanece temporariamente desativado para reduzir cache de versões antigas durante a fase de atualização frequente;
+- build estático: 0917JB-20260920.

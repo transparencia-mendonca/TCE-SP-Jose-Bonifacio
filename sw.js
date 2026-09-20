@@ -1,1 +1,9 @@
-const C="tcesp-jose-bonifacio-v070",A=["./","index.html","style.css","app.js","seed-data.js","manifest.webmanifest","icon.svg"];self.addEventListener("install",e=>e.waitUntil(caches.open(C).then(c=>c.addAll(A)).then(()=>self.skipWaiting())));self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(fetch(e.request).then(r=>{let c=r.clone();caches.open(C).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)))})
+/* v0.9.17-JB — worker de transição: remove caches e se desregistra.
+   O painel permanece temporariamente sem cache offline durante a fase de atualização frequente. */
+self.addEventListener("install",e=>{self.skipWaiting()});
+self.addEventListener("activate",e=>{e.waitUntil((async()=>{
+  const ks=await caches.keys();
+  await Promise.all(ks.filter(k=>/^tcesp-jose-bonifacio-/i.test(k)).map(k=>caches.delete(k)));
+  await self.clients.claim();
+  try{await self.registration.unregister()}catch(_e){}
+})())});
